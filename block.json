@@ -1,11 +1,4 @@
-<<<<<<< HEAD
 {
     "version": "1.0",
     "frontendEntry": "./frontend/index.js"
 }
-=======
-{
-    "version": "1.0",
-    "frontendEntry": "./frontend/index.js"
-}
->>>>>>> e910fc8b3767c385573eee70fe23865612865da6
