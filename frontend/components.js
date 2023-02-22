@@ -133,6 +133,10 @@ export function MainContainer({table, view}) {
         return {label: v, value: v}
     })
 
+    const [value, setValue] = useState(options[0].value);
+
+
+
     return (
         <Box padding="3">
             <Box marginBottom="3" borderBottom="thick">
@@ -145,7 +149,7 @@ export function MainContainer({table, view}) {
 
             <Box marginBottom="3" borderBottom="thick">
 
-            <h4 className="mb-2">This Airtable extension can get and save OpenAI ChatGPT responses to selected records</h4>
+            <Text className="h5 mb-2">This Airtable extension can get and save OpenAI ChatGPT responses to selected records</Text>
             <Button marginBottom="3" onClick={invokeCollapse} 
                     size={"large"}
                     width={'calc(100%)'}
@@ -177,7 +181,7 @@ export function MainContainer({table, view}) {
             </Collapse>
             </Box>
 
-            <h4 className="mb-2">Select Data Columns settings</h4>
+            <Text className="h5 mb-2">select from and to which column you would like to edit, modify ... etc the data</Text>
 
             <Box paddingBottom="3" display="flex">
                 <Box width="49%">
