@@ -1,0 +1,16 @@
+<<<<<<< HEAD
+/node_modules
+/.airtableblocksrc.json
+/build
+.idea
+/.tmp
+/global_config.json
+=======
+/node_modules
+/.airtableblocksrc.json
+/build
+.idea
+/.tmp
+/global_config.json
+>>>>>>> e910fc8b3767c385573eee70fe23865612865da6
+.block
