@@ -11,7 +11,8 @@ import {
     Text,
     useRecords, SelectSynced
 } from "@airtable/blocks/ui";
-
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import Collapse from 'react-bootstrap/Collapse';
 //import {Configuration, OpenAIApi} from 'openai';
 
 const DAVINCI = 'text-davinci-003'
@@ -19,6 +20,7 @@ const DAVINCI = 'text-davinci-003'
 async function queryOpenAi(prompt) {
         
     //Debug console.log("translate to english :" + prompt);
+     
 
     const requestOptions = {
       method: 'POST',
@@ -71,6 +73,7 @@ export function SettingsContainer() {
     return <Box padding="3">{options}</Box>
 }
 
+
 export async function processRecords(table, records, totalRecords, setProgressBarProgress, setProgressText, setInProgress) {
     setProgressBarProgress(0)
     setInProgress(true)
@@ -98,6 +101,8 @@ export async function processRecords(table, records, totalRecords, setProgressBa
 }
 
 export function MainContainer({table, view}) {
+
+    const [isVisible, initHs] = useState(false)
     const globalConfig = useGlobalConfig();
     let [progressBarProgress, setProgressBarProgress] = useState(0)
     let [progressText, setProgressText] = useState('in progress...')
@@ -112,7 +117,9 @@ export function MainContainer({table, view}) {
     let records = useRecords(view)
 
     let totalRecords = records && records.length;
-
+    const invokeCollapse = () => {
+        return initHs(!isVisible)
+    }
     const models = ['text-davinci-003'].map((i) => {
         return {label: i, value: i}
     })
@@ -135,20 +142,43 @@ export function MainContainer({table, view}) {
                     <Text textColor="light" as="span"> View: </Text> {view.name}
                 </Heading>
             </Box>
-            <Box paddingBottom="3" style={{ display : "none" }}>
-                <Heading size="xsmall" textColor="light"> Model </Heading>
-                <SelectSynced options={models} globalConfigKey="model" placeholder="Max Tokens" width="100%" />
-            </Box>
-            <Box paddingBottom="3" display="flex" style={{ display : "none" }}>
-                <Box width="49%">
-                    <Heading size="xsmall" textColor="light"> Max Tokens </Heading>
-                    <SelectSynced options={tokens} globalConfigKey="maxTokens" placeholder="Max Tokens" />
+
+            <Box marginBottom="3" borderBottom="thick">
+
+            <h4 className="mb-2">This Airtable extension can get and save OpenAI ChatGPT responses to selected records</h4>
+            <Button marginBottom="3" onClick={invokeCollapse} 
+                    size={"large"}
+                    width={'calc(100%)'}
+                    icon={/*isVisible ? "chevronUp" : "chevronDown"*/ "settings"}
+                    display={"flexShrink"}
+            >
+                Adjust configs ChatGPT
+            </Button>
+           
+            <Collapse in={isVisible}>
+                <Box paddingBottom="3" paddingTop="3" id="collapsePanel">
+               
+                    <Box paddingBottom="3">
+                        <Heading size="xsmall" textColor="light"> Model </Heading>
+                        <SelectSynced options={models} globalConfigKey="model" placeholder="Max Tokens" width="100%" />
+                    </Box>
+                    <Box paddingBottom="3" display="flex">
+                        <Box width="100%">
+                            <Heading size="xsmall" textColor="light"> Max Tokens </Heading>
+                            <SelectSynced options={tokens} globalConfigKey="maxTokens" placeholder="Max Tokens" />
+                        </Box>
+                        <Box width="100%" marginLeft="2%">
+                            <Heading size="xsmall" textColor="light"> Temperature </Heading>
+                            <SelectSynced options={temps} globalConfigKey="temperature" placeholder="Temperature" />
+                        </Box>
+                    </Box>
+               
                 </Box>
-                <Box width="49%" marginLeft="2%" style={{ display : "none" }}>
-                    <Heading size="xsmall" textColor="light"> Temperature </Heading>
-                    <SelectSynced options={temps} globalConfigKey="temperature" placeholder="Temperature" />
-                </Box>
+            </Collapse>
             </Box>
+
+            <h4 className="mb-2">Select Data Columns settings</h4>
+
             <Box paddingBottom="3" display="flex">
                 <Box width="49%">
                     <Heading size="xsmall" textColor="light">From</Heading>
