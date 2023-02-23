@@ -14,6 +14,8 @@ import {
 } from "@airtable/blocks/ui";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Collapse from "react-bootstrap/Collapse";
+import Badge from 'react-bootstrap/Badge';
+import Alert from 'react-bootstrap/Alert';
 //import {Configuration, OpenAIApi} from 'openai';
 
 const DAVINCI = "text-davinci-003";
@@ -160,24 +162,21 @@ export function MainContainer({ table, view }) {
   return (
     <Box padding="3">
       <Box marginBottom="3" borderBottom="thick">
-        <Heading size="small">
-          <Text textColor="light" as="span">
+        <Heading size="large">
+          <Text className="h6" textColor="light" as="span">
             Table:{" "}
-            <span className="text-success">
-              <strong> {table.name} </strong>{" "}
-            </span>
+            <Badge pill bg="primary">
+                {table.name}
+            </Badge>
           </Text>
-          <Text textColor="darkred" as="span">
-            {" "}
-            ›{" "}
+          <Text className="h6" textColor="darkred" as="span">
+                {" "} › {" "}
           </Text>
-
-          <Text textColor="light" as="span">
+          <Text className="h6" textColor="light" as="span">
             View:{" "}
-            <span className="text-success">
-              {" "}
-              <strong> {view.name} </strong>{" "}
-            </span>
+            <Badge pill bg="success">
+                {view.name}
+            </Badge>
           </Text>
         </Heading>
       </Box>
@@ -202,8 +201,7 @@ export function MainContainer({ table, view }) {
           <Box paddingBottom="3" paddingTop="3" id="collapsePanel">
             <Box paddingBottom="3">
               <Heading size="xsmall" textColor="light">
-                {" "}
-                Model{" "}
+                Model 
               </Heading>
               <SelectSynced
                 options={models}
@@ -215,41 +213,54 @@ export function MainContainer({ table, view }) {
             <Box paddingBottom="3" display="flex">
               <Box width="100%">
                 <Heading size="xsmall" textColor="light">
-                  {" "}
-                  Max Tokens{" "}
+                  Max Tokens 
                 </Heading>
                 <SelectSynced
                   options={tokens}
                   globalConfigKey="maxTokens"
                   placeholder="Max Tokens"
                 />
+                <Heading size="small" textColor="light">
+                    <Text textColor="light" as="span">
+                        Default value = 1024
+                    </Text>
+                </Heading>
               </Box>
               <Box width="100%" marginLeft="2%">
                 <Heading size="xsmall" textColor="light">
-                  {" "}
-                  Temperature{" "}
+                  Temperature
                 </Heading>
                 <SelectSynced
                   options={temps}
                   globalConfigKey="temperature"
                   placeholder="Temperature"
                 />
+                <Heading size="small" textColor="light">
+                    <Text textColor="light" as="span">
+                        Default value = 0
+                    </Text>
+                </Heading>
               </Box>
             </Box>
+            <Alert variant="secondary">
+                <Text className="h6">Temperature</Text>
+                <Text size="small">
+                    The lower the temperature, the more likely GPT-3 will choose words with a higher probability of occurrence. The temperature determines how greedy the generative model is.
+                </Text>
+                <Text className="h6">max_tokens</Text>
+                <Text size="small">
+                    You're allowed to have up to 2048 tokens or about 1500 words in your prompt when you run, and that includes any generated text.
+                </Text>
+            </Alert>
           </Box>
         </Collapse>
       </Box>
-
-      <p className="h6 mb-2">
-        Select from and to which column you would like to edit, modify ... etc
-        the data
-      </p>
 
       <Box paddingBottom="3" display="flex">
         <Box width="49%">
           <Heading size="small" textColor="light">
             <Text textColor="light" as="span">
-              From
+              From 
             </Text>
           </Heading>
           <FieldPickerSynced table={table} globalConfigKey="fieldFrom" />
@@ -257,8 +268,7 @@ export function MainContainer({ table, view }) {
         <Box width="49%" marginLeft="2%">
           <Heading size="small" textColor="light">
             <Text textColor="light" as="span">
-              {" "}
-              Save To{" "}
+              Save To
             </Text>
           </Heading>
           <FieldPickerSynced
