@@ -143,7 +143,7 @@ export function MainContainer({ table, view }) {
   const invokeCollapse = () => {
     return initHs(!isVisible);
   };
-  const models = ["text-davinci-003"].map((i) => {
+  const models = ["text-davinci-003", 'gpt-4'].map((i) => {
     return { label: i, value: i };
   });
   const totalTokenOpts = globalConfig.get("model") === DAVINCI ? 126 : 65,
