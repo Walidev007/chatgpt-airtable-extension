@@ -16,12 +16,10 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Collapse from "react-bootstrap/Collapse";
 import Badge from 'react-bootstrap/Badge';
 import Alert from 'react-bootstrap/Alert';
-//import {Configuration, OpenAIApi} from 'openai';
 
 const DAVINCI = "text-davinci-003";
 
 async function queryOpenAi(prompt) {
-  //Debug console.log("translate to english :" + prompt);
 
   const requestOptions = {
     method: "POST",
@@ -52,7 +50,6 @@ async function queryOpenAi(prompt) {
     );
     const data = await response.json();
     return data.choices[0].text.trim();
-    //Debug console.log(data, response);
   } catch (e) {
     return e.message;
   }
@@ -108,7 +105,7 @@ export async function processRecords(
         };
       })
     );
-    //console.dir(recs)
+    
     await table.updateRecordsAsync(recs);
     let v = i + batchRecords.length;
     i += batchSize;
@@ -134,7 +131,7 @@ export function MainContainer({ table, view }) {
     !fieldTo ||
     !globalConfig.get("prompt") ||
     !globalConfig.get("model") ||
-    !globalConfig.get("maxTokens"); /* || !globalConfig.get("temperature") */
+    !globalConfig.get("maxTokens");
   let apiKeyWarning = !globalConfig.get("apiKey");
 
   let records = useRecords(view);
@@ -191,7 +188,7 @@ export function MainContainer({ table, view }) {
           onClick={invokeCollapse}
           size={"large"}
           width={"calc(100%)"}
-          icon={/*isVisible ? "chevronUp" : "chevronDown"*/ "settings"}
+          icon={"settings"}
           display={"flexShrink"}
         >
           Adjust configs ChatGPT
